@@ -64,6 +64,32 @@ client.on('ready', () => {
 
 client.on('message', msg => {
 
+  if (msg.content.startsWith(prefix+"addcup"))
+      {
+      console.log('COMMANDE: addcup');
+      //On recupère et on split les messages
+      const args = msg.content.split(' ').slice(1);
+      //On déclare un nouvel objet avec ces variables
+      var macup = new Cup(args[1], args[2], args[3], args[4]);
+
+      //Cup('nom', 'date', 'maps', 'lien');
+      //Création d'un objet embed pour recap la cup
+      const cupe = new Discord.RichEmbed();
+
+      //Cup property
+      cupe.setAuthor(macup.nom);
+      cupe.setColor('RED');
+      cupe.setDescription(macup.nom+'\n\n'+macup.lien+'\n\n');
+
+      //Sending cup
+      msg.channel.send(cupe);
+
+
+      console.log("args: "+args[1]);
+      console.log("args: "+args[2]);
+      console.log("args: "+args[3]);
+      console.log("args: "+args[4]);
+    }
 
     switch (msg.content) {
 
@@ -71,40 +97,11 @@ client.on('message', msg => {
             msg.channel.send(embed);
         break;
 
-
         case 'r':
             msg.react("✅");
             msg.react("❌");
 
             //cocher oui -> getrole
-
-        break;
-
-        case prefix+'addcup':
-
-            console.log('COMMANDE: addcup');
-            //On recupère et on split les messages
-            const args = msg.content.split(' ').slice(1);
-            //On déclare un nouvel objet avec ces variables
-            var macup = new Cup(args[1], args[2], args[3], args[4]);
-
-            //Cup('nom', 'date', 'maps', 'lien');
-            //Création d'un objet embed pour recap la cup
-            const cupe = new Discord.RichEmbed();
-
-            //Cup property
-            cupe.setAuthor(macup.nom);
-            cupe.setColor('RED');
-            cupe.setDescription(macup.nom+'\n\n'+macup.lien+'\n\n');
-
-            //Sending cup
-            msg.channel.send(cupe);
-
-
-            console.log("args: "+args[1]);
-            console.log("args: "+args[2]);
-            console.log("args: "+args[3]);
-            console.log("args: "+args[4]);
         break;
 
         case prefix+'cup':
