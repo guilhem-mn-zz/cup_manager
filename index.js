@@ -12,7 +12,7 @@ class Cup {
 };
 
 //Prefix
-var prefix = "!";
+const prefix = "!";
 
 //RichEmbed
 const embed = new Discord.RichEmbed();
@@ -37,7 +37,7 @@ function randomG(min, max) {
 
 function game() {
     //Loop toutes les 30s
-        var r = randomG(0, 2);
+        const r = randomG(0, 2);
         client.user.setActivity(gamel[r], {
             type: 'LISTENING'
         });
@@ -86,7 +86,7 @@ client.on('message', msg => {
             //On recupère et on split les messages
             const args = msg.content.split(' ').slice(1);
             //On déclare un nouvel objet avec ces variables
-            var macup = new Cup(args[1], args[2], args[3], args[4]);
+            const macup = new Cup(args[1], args[2], args[3], args[4]);
 
             //Cup('nom', 'date', 'maps', 'lien');
             //Création d'un objet embed pour recap la cup
