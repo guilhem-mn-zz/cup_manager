@@ -12,7 +12,7 @@ class Cup {
 };
 
 //Prefix
-var prefix = "!";
+const prefix = "!";
 
 //RichEmbed
 const embed = new Discord.RichEmbed();
@@ -37,7 +37,7 @@ function randomG(min, max) {
 
 function game() {
     //Loop toutes les 30s
-        var r = randomG(0, 2);
+        const r = randomG(0, 2);
         client.user.setActivity(gamel[r], {
             type: 'LISTENING'
         });
@@ -102,6 +102,7 @@ client.on('message', msg => {
             msg.react("❌");
 
             //cocher oui -> getrole
+
         break;
 
         case prefix+'cup':
