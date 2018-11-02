@@ -20,7 +20,14 @@ const embed = new Discord.RichEmbed();
 embed.setAuthor('Available commands:');
 embed.setColor('NAVY');
 //embed.setThumbnail(message.author.avatarUR);
-embed.setDescription('\n\n**.h**: Help\n\n**.addcup**: The function adds a cup to the scehdule\nThe Cup admins needs to make sure to declare the cup as following\n!addcup (name, date, map, link)\n\nWhere:\n\nDate need to be xx/xx/xxxx\nMap sumbission link must be x@xxx.xx\nDiscord link must be at this format"a9ze7"');
+
+const n = "\n\n";
+const h = "**"+prefix+"h**: Help";
+const addcup = "**"+prefix+"addcup**: \nThe Cup admins needs to make sure to declare the cup as following\n!addcup name date map link\n\nWhere:";
+const argcup = "Date need to be xx/xx/xxxx\nMap sumbission link must be x@xxx.xx\nDiscord link must be at this format'a9ze7'";
+const cup = "**"+prefix+"cup**: Display complete list of the upcomming events, by style";
+
+embed.setDescription(h+n+addcup+n+argcup+n+cup);
 
 
 
@@ -43,15 +50,12 @@ function game() {
         });
 
         if (r==1) {
-            console.log('users');
             setTimeout(game, 30000);
         }
         else if (r==0) {
-            console.log('.h');
             setTimeout(game, 30000);
         }
         else if (r==2) {
-            console.log('Gui');
             setTimeout(game, 30000);
         }
 }
@@ -62,33 +66,51 @@ client.on('ready', () => {
   setTimeout(game, 1);
 });
 
+//gestion des reactions
+/*client.on('messageReactionAdd', function(reaction) {
+    let users = reaction.users;
+    console.log(users);
+
+});*/
+
 client.on('message', msg => {
 
-  if (msg.content.startsWith(prefix+"addcup"))
-      {
-      console.log('COMMANDE: addcup');
-      //On recupère et on split les messages
-      const args = msg.content.split(' ').slice(1);
-      //On déclare un nouvel objet avec ces variables
-      var macup = new Cup(args[1], args[2], args[3], args[4]);
-
-      //Cup('nom', 'date', 'maps', 'lien');
-      //Création d'un objet embed pour recap la cup
-      const cupe = new Discord.RichEmbed();
-
-      //Cup property
-      cupe.setAuthor(macup.nom);
-      cupe.setColor('RED');
-      cupe.setDescription(macup.nom+'\n\n'+macup.lien+'\n\n');
-
-      //Sending cup
-      msg.channel.send(cupe);
 
 
-      console.log("args: "+args[1]);
-      console.log("args: "+args[2]);
-      console.log("args: "+args[3]);
-      console.log("args: "+args[4]);
+    if (msg.content.startsWith(prefix+"addcup")) {//word detection with startsWith
+        
+        //On recupère et on split les messages
+        const args = msg.content.split(' ').slice(1);
+        //On déclare un nouvel objet avec ces variables
+        let macup = new Cup(args[0], args[1], args[2], args[3]);
+
+        //Cup('nom', 'date', 'maps', 'lien');
+        //Création d'un objet embed pour recap la cup
+        const cupe = new Discord.RichEmbed();
+
+        //Cup property
+        cupe.setAuthor(macup.nom);
+        cupe.setColor('NAVY');
+        cupe.setDescription(macup.date+'\n\n'+macup.map+'\n\n'+macup.lien+'\n\n');
+
+        //Sending cup + react
+        msg.channel.send(cupe)
+        .then(function (message) {
+            message.react("✅")
+            message.react("❌")
+        });
+        
+        //creation des roles avec le nom de la cup        
+        msg.guild.createRole({
+            name: macup.nom,
+            permissions: []
+        }).then ((role) => {
+            //donation des roles aux react
+            msg.member.addRole(role.id);
+        }).catch ((e) => console.log("err: "+e));
+        
+      //ajout de l'objet en bdd ?
+
     }
 
     switch (msg.content) {
@@ -99,18 +121,15 @@ client.on('message', msg => {
 
         case 'r':
             msg.react("✅");
-            msg.react("❌");
-
-            //cocher oui -> getrole
-
         break;
 
         case prefix+'cup':
             console.log('COMMANDE: cup');
             msg.channel.send("Recents Cup");
+            //requete
         break;
     }
 });
 
 
-client.login('');
+client.login('NTA3MTU0NDEzNjg1NTcxNTg1.Dr2fgg.WwfTeTcmxCe9YH3sFO7f-6M-Y94');
