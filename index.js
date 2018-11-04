@@ -138,7 +138,7 @@ client.on('message', msg => {
             };
 
             //supprimer ]} puis rajouter ,
-            
+
             jf.writeFile(file, json, { flag: 'a' }, function (err) {
                 if (err) console.error(err)
               })
@@ -165,10 +165,9 @@ client.on('message', msg => {
 
         case prefix+'i':
             //invite
-            const l = "https://discord.gg/KN9XBBN";
             msg.delete()
                 .then(function (message) {
-                    message.author.send(l)
+                    message.author.send(process.env.DC)
                 });
             
         break;
