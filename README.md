@@ -1,7 +1,7 @@
-# cup_manager
-Discord cup manager bot
+# Cup Manager v1
+Discord bot, able to manage tournaments.
 
-Commands explaination:
+# Available Commands explaination:
   
   !h: Displays help embed message
   
@@ -16,3 +16,9 @@ Commands explaination:
       Discord Link
   
   This command create an embed message with a selfnamed role, you need to react to this message to get the role.
+
+
+# Upcoming commands:
+
+!tree: generate tournament tree and random seed among players
+
